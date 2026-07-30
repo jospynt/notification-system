@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.trusted.packages: "org.example.dto"
+
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 25
+    username: 2f8165a1e8f770
+    password: df6c9dc5b0e991
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
