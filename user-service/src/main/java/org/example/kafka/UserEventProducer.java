@@ -16,14 +16,6 @@ public class UserEventProducer {
     }
 
     public void sendUserEvent(UserNotificationEvent event) {
-
-        try {
-            kafkaTemplate.send(TOPIC, event).get();
-            System.out.println("Kafka event sent: " + event);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        kafkaTemplate.send(TOPIC, event);
     }
 }

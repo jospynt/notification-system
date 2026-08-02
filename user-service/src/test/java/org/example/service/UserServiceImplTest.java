@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
+    // NEW
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -47,7 +52,7 @@ public class UserServiceImplTest {
             when(userRepository.save(user))
                     .thenReturn(user);
 
-            User result = userService.create(any(User.class));
+            User result = userService.create(user);
 
             assertSame(user, result);
 

@@ -1,8 +1,7 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.dto.CreateUserRequest;
-import org.example.dto.UpdateUserRequest;
+import org.example.dto.UserRequest;
 import org.example.dto.UserResponse;
 import org.example.entity.User;
 import org.example.mapper.UserMapper;
@@ -44,7 +43,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> create(
-            @Valid @RequestBody CreateUserRequest request) {
+            @Valid @RequestBody UserRequest request) {
 
         User user = UserMapper.toEntity(request);
 
@@ -58,7 +57,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateUserRequest request) {
+            @Valid @RequestBody UserRequest request) {
 
         User user = UserMapper.toEntity(request);
 

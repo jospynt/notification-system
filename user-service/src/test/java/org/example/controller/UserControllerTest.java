@@ -1,8 +1,7 @@
 package org.example.controller;
 
-import org.example.dto.UpdateUserRequest;
+import org.example.dto.UserRequest;
 import tools.jackson.databind.ObjectMapper;
-import org.example.dto.CreateUserRequest;
 import org.example.entity.User;
 import org.example.exception.UserNotFoundException;
 import org.example.service.UserService;
@@ -135,7 +134,7 @@ class UserControllerTest {
                 .thenReturn(user);
 
 
-        CreateUserRequest request = new CreateUserRequest(
+        UserRequest request = new UserRequest(
                 "John",
                 "john@example.com",
                 25
@@ -155,7 +154,7 @@ class UserControllerTest {
     @Test
     void shouldReturn400WhenCreateUserRequestIsInvalid() throws Exception {
 
-        CreateUserRequest request = new CreateUserRequest(
+        UserRequest request = new UserRequest(
                 "",
                 "invalid-email",
                 200
@@ -186,7 +185,7 @@ class UserControllerTest {
                 .thenReturn(updatedUser);
 
 
-        UpdateUserRequest request = new UpdateUserRequest(
+        UserRequest request = new UserRequest(
                 "Updated John",
                 "updated@example.com",
                 35
@@ -206,7 +205,7 @@ class UserControllerTest {
     @Test
     void shouldReturn400WhenUpdateUserRequestIsInvalid() throws Exception {
 
-        UpdateUserRequest request = new UpdateUserRequest(
+        UserRequest request = new UserRequest(
                 "",
                 "invalid-email",
                 200

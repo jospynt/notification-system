@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record CreateUserRequest(
+public record UserRequest(
 
     @NotBlank(message = "Name must not be blank")
     @Size(max = 100, message = "Name must not exceed 100 characters")

@@ -1,12 +1,12 @@
 package org.example.service;
 
-import org.example.dto.UserNotificationEvent;
 import org.example.dto.UserOperation;
 import org.example.entity.User;
+import org.example.event.UserEvent;
 import org.example.exception.UserNotFoundException;
 import org.example.exception.ValidationException;
-import org.example.kafka.UserEventProducer;
 import org.example.repository.UserRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +17,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserEventProducer userEventProducer;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public UserServiceImpl(
             UserRepository userRepository,
-            UserEventProducer userEventProducer) {
+            ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
-        this.userEventProducer = userEventProducer;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -36,14 +36,14 @@ public class UserServiceImpl implements UserService {
 
         User savedUser = userRepository.save(user);
 
-        userEventProducer.sendUserEvent(
-                new UserNotificationEvent(
-                        UserOperation.CREATE,
-                        savedUser.getEmail()
-                )
+        applicationEventPublisher.publishEvent(
+            new UserEvent(
+                    UserOperation.CREATE,
+                    savedUser.getEmail()
+            )
         );
 
-        return userRepository.save(user);
+        return savedUser;
     }
 
     @Override
@@ -79,7 +79,16 @@ public class UserServiceImpl implements UserService {
         existingUser.setEmail(user.getEmail());
         existingUser.setAge(user.getAge());
 
-        return userRepository.save(existingUser);
+        User updatedUser = userRepository.save(existingUser);
+
+        applicationEventPublisher.publishEvent(
+            new UserEvent(
+                    UserOperation.UPDATE,
+                    updatedUser.getEmail()
+            )
+        );
+
+        return updatedUser;
     }
 
     @Override
@@ -92,11 +101,11 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
 
-        userEventProducer.sendUserEvent(
-                new UserNotificationEvent(
-                        UserOperation.DELETE,
-                        user.getEmail()
-                )
+        applicationEventPublisher.publishEvent(
+            new UserEvent(
+                    UserOperation.DELETE,
+                    user.getEmail()
+            )
         );
     }
 }

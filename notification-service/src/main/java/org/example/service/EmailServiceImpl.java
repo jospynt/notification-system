@@ -18,7 +18,7 @@ public class EmailServiceImpl implements EmailService {
         send(
                 email,
                 "Account created",
-                "Your account was successfully created"
+                "Здравствуйте! Ваш аккаунт на сайте был успешно создан."
         );
     }
 
@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
         send(
                 email,
                 "Account deleted",
-                "Your account was deleted"
+                "Ваш аккаунт был удалён."
         );
     }
 

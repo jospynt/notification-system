@@ -17,10 +17,10 @@ spring:
         spring.json.trusted.packages: "org.example.dto"
 
   mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 25
-    username: 2f8165a1e8f770
-    password: df6c9dc5b0e991
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:

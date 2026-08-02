@@ -1,7 +1,6 @@
 package org.example.mapper;
 
-import org.example.dto.CreateUserRequest;
-import org.example.dto.UpdateUserRequest;
+import org.example.dto.UserRequest;
 import org.example.dto.UserResponse;
 import org.example.entity.User;
 
@@ -20,15 +19,7 @@ public final class UserMapper {
         );
     }
 
-    public static User toEntity(CreateUserRequest request) {
-        return new User(
-                request.name(),
-                request.email(),
-                request.age()
-        );
-    }
-
-    public static User toEntity(UpdateUserRequest request) {
+    public static User toEntity(UserRequest request) {
         return new User(
                 request.name(),
                 request.email(),
